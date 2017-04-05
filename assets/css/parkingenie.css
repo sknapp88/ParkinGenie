@@ -1,0 +1,10 @@
+#logo {
+	height: 50px;
+	margin-top: -10pt;
+}
+
+body {
+	background-image: url(../images/parking-deck.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+}
