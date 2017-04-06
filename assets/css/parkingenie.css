@@ -1,0 +1,35 @@
+body {
+	background-image: url(../images/parking-deck.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+li {
+	display: inline;
+}
+
+#navbar {
+	background-color: #907a70;
+	border-color: #907a70;
+
+}
+#logo {
+	height: 50px;
+	margin-top: -10pt;
+}
+
+#pg-map{
+	height:600px;
+}
+
+#spacer {
+	height: 30px;
+}
+
+#events{
+	height: 400px;
+}
+
+.place-holder{
+	background-color: #fff;
+}
