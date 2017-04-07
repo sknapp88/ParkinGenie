@@ -25,7 +25,7 @@
 							<img alt="Brand" id="logo" src="assets/images/parkingenie.png">
 						</a>
 					</div>
-					<div class="col-sm-3 nav-links">
+					<div class="col-sm-7 nav-links">
 						<ul>
 							<li>
 								<a href="#">email</a>
@@ -60,5 +60,16 @@
 		</div>
 	</div>
 </body>
+<script>
+      function initMap() {
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(document.getElementById('pg-map'), {
+          center: {lat: -34.397, lng: 150.644},
+          scrollwheel: false,
+          zoom: 8
+        });
+      }
 
+    </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXuihBh8bUno31ULWLeNLvtVNUOxlq_7A&callback=initMap" async defer></script>
 </html>
