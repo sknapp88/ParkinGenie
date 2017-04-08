@@ -1,35 +1,38 @@
-body {
+/*body {
 	background-image: url(../images/parking-deck.jpg);
 	background-size: cover;
 	background-attachment: fixed;
-}
+	}*/
 
-li {
-	display: inline;
-}
+	li {
+		display: inline;
+	}
 
-#navbar {
-	background-color: #907a70;
-	border-color: #907a70;
+	#navbar {
+		background-color: #907a70;
+		border-color: #907a70;
 
-}
-#logo {
-	height: 50px;
-	margin-top: -10pt;
-}
+	}
+	#logo {
+		height: 50px;
+		/*margin-top: -10pt;*/
+	}
 
-#pg-map{
-	height:600px;
-}
+	#pg-map{
+		height: 720px;
+	}
 
-#spacer {
-	height: 30px;
-}
+	#spacer {
+		height: 30px;
+	}
 
-#events{
-	height: 400px;
-}
+	#events{
+		height: 720px;
+		background-image: url(../images/parking-deck.jpg);
+		background-size: cover;
+		background-attachment: fixed;
+	}
 
-.place-holder{
-	background-color: #fff;
-}
+	.place-holder{
+		background-color: #fff;
+	}

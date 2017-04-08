@@ -16,60 +16,76 @@
 	
 </head>
 <body>
-	<header>
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<div class="col-sm-3">
-						<a class="navbar-brand" href="#">
-							<img alt="Brand" id="logo" src="assets/images/parkingenie.png">
-						</a>
-					</div>
-					<div class="col-sm-7 nav-links">
-						<ul>
-							<li>
-								<a href="#">email</a>
-							</li>
-							<li>
-								<a href="#">profile settings</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<div class="row" id="spacer"></div>
+
+
+
 
 	<div class="row">
 		<div class="wrapper">
-			<div class="col-sm-1"></div>
-			<div class="col-sm-7 place-holder" id="pg-map">
+
+			<div class="col-sm-3 place-holder" id="events">
+				<header>
+					<nav class="navbar navbar-default">
+						<div class="container-fluid">
+							<div class="navbar-header">
+
+									<div class="col-sm-12">
+										<img alt="Brand" id="logo" src="assets/images/Logomakr_7o3II6.png">
+									</div>
+
+							</div>
+						</div>
+					</nav>
+				</header>
+
+			</div>
+			<div class="col-sm-9 place-holder" id="pg-map">
 				
 			</div>
-			<div class="col-sm-1"></div>
-			<div class="col-sm-2 place-holder" id="events">
-				
-			</div>
-			<div class="col-sm-1"></div>
+
 		</div>
 	</div>
-	<div class="row">
-		<div class="wrapper">
-			<div class=""></div>
-		</div>
-	</div>
+
 </body>
 <script>
+      var map, infoWindow;
       function initMap() {
-        // Create a map object and specify the DOM element for display.
-        var map = new google.maps.Map(document.getElementById('pg-map'), {
-          center: {lat: -34.397, lng: 150.644},
-          scrollwheel: false,
-          zoom: 8
+        map = new google.maps.Map(document.getElementById('pg-map'), {
+          center: {lat: 35.228440, lng:  -80.834919},
+          mapTypeId: "satellite",
+          zoom: 15
         });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
       }
 
-    </script>
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+      }
+
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXuihBh8bUno31ULWLeNLvtVNUOxlq_7A&callback=initMap" async defer></script>
 </html>
