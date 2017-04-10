@@ -2,7 +2,7 @@
   var form = (`<form id="email-form">
     <label for="email">Please enter your Email</label>
     <input type="text" class="form-control input-form" id="email-input" name="email-input">
-    <input type="submit" class="form-control" name="submit">
+    <input type="submit" class="form-control" name="submit" id="e-submit">
     </form>`);
   var panel = (`<div class="holder">
     <div class="panel panel-default" id="events">
@@ -14,6 +14,7 @@
     </div>
     </div>
     </div>`);
+  var genie = (`<img src="assets/images/junk-genie.png" alt="genie awaits">`)
   function initMap() {
     map = new google.maps.Map(document.getElementById('pg-map'), {
      center: {lat: 35.228440, lng:  -80.834919},
@@ -53,6 +54,21 @@
 
      var me = $('#dynamic');
 
+     $('#e-submit').on('click', function(emailToTest) {
+      event.preventDefault();
+    // check for @
+    var atSymbol = emailToTest.indexOf("@");
+    if(atSymbol < 1) return false;
+
+    var dot = emailToTest.indexOf(".");
+    if(dot <= atSymbol + 2) return false;
+
+    // check that the dot is not at the end
+    if (dot === emailToTest.length - 1) return false;
+
+    return true;
+  });
+
      $('#email-button').click(function(){
       if (me.html() === ""){
         me.append(form);
@@ -72,3 +88,13 @@
         me.append(panel);
       }
     });
+
+     $("#begin-search-button").click(function(){
+      if (me.html() === ""){
+        me.append(genie);
+      }
+      else if (me.html() != genie){
+        me.html('');
+        me.append(genie);
+      }
+     })
