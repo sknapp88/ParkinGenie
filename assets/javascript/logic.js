@@ -1,25 +1,32 @@
 	var map, infoWindow;
   var form = (`<form id="email-form">
     <label for="email">Please enter your Email</label>
-    <input type="text" class="form-control input-form" id="email-input" name="email-input">
-    <input type="submit" class="form-control" name="submit" id="e-submit">
+    <input type="text" class="form-control top-element" id="email-input" name="email-input">
+    <button type="button" class="form-control btn-primary" name="submit" id="e-submit">Submit</button>
     </form>`);
   var panel = (`<div class="holder">
     <div class="panel panel-default" id="events">
     <div class="panel-heading">
     <h3 class="panel-title">Nearby Events</h3>
     <ul id="event-list">
-    <li>does this help?</li>
+    <li class="well well-sm">does this help?</li>
     </ul>
     </div>
     </div>
     </div>`);
-  var genie = (`<img src="assets/images/junk-genie.png" alt="genie awaits">`)
+  var genie = (`
+    <div class="row">
+    <img class="top-elemnt" src="assets/images/junk-genie.png" alt="genie awaits">
+    </div>
+    <div class="row">
+    <button type="button" id="button1" class="form-control btn-primary" name="park">Remember Where I Parked</button>
+    </div>
+    `);
   function initMap() {
     map = new google.maps.Map(document.getElementById('pg-map'), {
      center: {lat: 35.228440, lng:  -80.834919},
 			// mapTypeId: "satellite",
-			zoom: 15
+			zoom: 20
 		});
     infoWindow = new google.maps.InfoWindow;
 
@@ -97,4 +104,17 @@
         me.html('');
         me.append(genie);
       }
-     })
+
+     function findParking(){
+      var cur_location = new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng());
+      var request = {
+        location: cur_location,
+        radius: 500,
+        types: "Parking"
+      };
+      var service = new google.maps.places.PlacesService(map);
+      service.search(request, createMarkers);
+    }
+
+    $("#button1").on("click", findParking());
+  });
