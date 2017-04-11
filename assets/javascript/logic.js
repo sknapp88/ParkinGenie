@@ -22,6 +22,17 @@
     <button type="button" id="button1" class="form-control btn-primary" name="park">Remember Where I Parked</button>
     </div>
     `);
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC7sur-winD7BqDB3TRLB8aO49-b_XBLWA",
+    authDomain: "parkingenie-3ab7b.firebaseapp.com",
+    databaseURL: "https://parkingenie-3ab7b.firebaseio.com",
+    projectId: "parkingenie-3ab7b",
+    storageBucket: "parkingenie-3ab7b.appspot.com",
+    messagingSenderId: "790386734940"
+  };
+  
+  firebase.initializeApp(config);
   function initMap() {
     map = new google.maps.Map(document.getElementById('pg-map'), {
      center: {lat: 35.228440, lng:  -80.834919},
