@@ -48,13 +48,43 @@
 				{  	
 					"spaceCoord": [ [35.22936,-80.83408], [35.22935, -80.83406], [35.22938, -80.83402], [35.22939, -80.83403] ],
 					"type": "standard",
-					"available": false,
+					"available": true,
 					"pgCarParkedHere": ""
 				},
 				{
 					"spaceCoord": [ [35.22912,-80.83412], [35.22910,-80.83410], [35.22913,-80.83406], [35.22915,-80.83407] ],
 					"type": "accessible",
-					"available": false,
+					"available": true,
+					"pgCarParkedHere": "" 
+				},
+				{
+					"spaceCoord": [ [35.22908,-80.83409], [35.22907,-80.83407], [35.2291,-80.83402], [35.22912,-80.83404] ],
+					"type": "accessible",
+					"available": true,
+					"pgCarParkedHere": "" 
+				},
+				{
+					"spaceCoord": [ [35.22914,-80.83405], [35.22912,-80.83403], [35.22915,-80.83399], [35.22917,-80.83401] ],
+					"type": "accessible",
+					"available": true,
+					"pgCarParkedHere": "" 
+				},
+				{
+					"spaceCoord": [ [35.22919,-80.8344], [35.22918,-80.83438], [35.22921,-80.83434], [35.22922,-80.83436] ],
+					"type": "standard",
+					"available": true,
+					"pgCarParkedHere": "" 
+				},
+				{
+					"spaceCoord": [ [35.22902,-80.83421], [35.229,-80.83419], [35.22903,-80.83415], [35.22905,-80.83417] ],
+					"type": "standard",
+					"available": true,
+					"pgCarParkedHere": "Seussan" 
+				},
+				{
+					"spaceCoord": [ [35.22933,-80.83452], [35.22931,-80.8345], [35.22935,-80.83446], [35.22936,-80.83448] ],
+					"type": "standard",
+					"available": true,
 					"pgCarParkedHere": "" 
 				}
 			]
