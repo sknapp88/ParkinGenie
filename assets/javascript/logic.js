@@ -1,5 +1,4 @@
-	var map, infoWindow;
-
+	 var map, infoWindow;
   var panel = (`<div class="holder">
     <div class="panel panel-default" id="events">
     <div class="panel-heading">
@@ -27,35 +26,42 @@
   };
 
   firebase.initializeApp(config);
-  
+
+  var database = firebase.database();
+  var spaces= [
+
+  ];
   function initMap() {
+    // var home = {lat: }
     map = new google.maps.Map(document.getElementById('pg-map'), {
      center: {lat: 35.228440, lng:  -80.834919},
-			// mapTypeId: "satellite",
-			zoom: 20
-		});
-    infoWindow = new google.maps.InfoWindow;
+      // mapTypeId: "satellite",
+      zoom: 20
+    });
+    infoWindow = new google.maps.InfoWindow();
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
-        	navigator.geolocation.getCurrentPosition(function(position) {
-        		var pos = {
-        			lat: position.coords.latitude,
-        			lng: position.coords.longitude
-        		};
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
 
-        		infoWindow.setPosition(pos);
-        		infoWindow.setContent('Location found.');
-        		infoWindow.open(map);
-        		map.setCenter(pos);
-        	}, function() {
-        		handleLocationError(true, infoWindow, map.getCenter());
-        	});
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
         } else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
         }
       }
+
+
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
        infoWindow.setPosition(pos);
@@ -67,30 +73,7 @@
 
      var me = $('#dynamic');
 
-     $('#e-submit').on('click', function(emailToTest) {
-      event.preventDefault();
-    // check for @
-    var atSymbol = emailToTest.indexOf("@");
-    if(atSymbol < 1) return false;
-    console.log(atSymbol);
-    var dot = emailToTest.indexOf(".");
-    if(dot <= atSymbol + 2) return false;
-    console.log(dot);
-    // check that the dot is not at the end
-    if (dot === emailToTest.length - 1) return false;
-
-    return true;
-  });
-
-     $('#email-button').click(function(){
-      if (me.html() === ""){
-        me.append(form);
-      }
-      else if ($("#dynamic").html() != form){
-        me.html('');
-        me.append(form);
-      }
-    });
+     
 
      $("#poi").click(function(){
       if (me.html() === ""){
@@ -120,20 +103,44 @@
         };
         var service = new google.maps.places.PlacesService(map);
         service.search(request, createMarkers);
-      }
-      findParking();
-    });
+      // console.log(map);
+    }
+    findParking();
+  });
 
-     $('.logonBtn').on('click', function(event) {
-      event.preventDefault();
-      var url = $(this).data('target');
-      location.replace(url);
-    });
+     // $("#button1").on("click", function(){
+      database.ref().on("value", function(snapshot){
+        console.log(snapshot.val().ParkingLots[0].spaces[1].spaceCoord[0]);
+      });
 
-  // $("#button1").on("click", function(){
-  //   myCar = {
-  //     lat: position.coords.latitude,
-  //     lng: position.coords.longitude
-  //   };
-  //   database.ref().
-  // });
+      // ref('ParkingLots').on("value", function(parkingLotsObjects) {
+      //   console.log("parkingLotsObjects = ", parkingLotsObjects.numChildren());
+
+      //   parkingLotsObjects.forEach(function(parkingLotsObjectItems) {
+
+      //     parkingLotsObjectItems.child("spaces");
+      //     console.log("spaces = ", parkingLotsObjectItems.child("spaces").numChildren());
+
+      //     parkingLotsObjectItems.child("spaces").forEach(function(spaces) {
+      //       console.log("spaces.spaceCoord = " + spaces.child("spaceCoord").val());
+      //     });
+      //   });
+      // });
+
+      $('.logonBtn').on('click', function(event) {
+        event.preventDefault();
+        var url = $(this).data('target');
+        location.replace(url);
+      });
+
+     // console.log(snapshot);
+
+     $(document).on("click", "#button1", function(){
+      navigator.geolocation.getCurrentPosition(function(position){
+        var myCar = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        console.log(myCar);
+      });
+    });

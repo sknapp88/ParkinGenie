@@ -6,6 +6,10 @@ form {
 	display: none;
 }*/
 
+#formGenie {
+	height: 200px;
+}
+
 #page{
 	height: 100%;
 }
