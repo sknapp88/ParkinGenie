@@ -28,9 +28,7 @@
   firebase.initializeApp(config);
 
   var database = firebase.database();
-  var spaces= [
 
-  ];
   function initMap() {
     // var home = {lat: }
     map = new google.maps.Map(document.getElementById('pg-map'), {
@@ -71,11 +69,168 @@
        infoWindow.open(map);
      }
 
-     var me = $('#dynamic');
+     var zoomLevel = { world: 1, continent: 5, city: 10, streets: 15, buildings: 17, parkingLots: 19, parkingSpaces: 20 };
 
-     
+     function placeCustomMarker(map, LatLng, iconImage, iconText) {
 
-     $("#poi").click(function(){
+      var icon = {
+        url: iconImage, // url
+        scaledSize: new google.maps.Size(124, 85) // scaled size
+       // origin: new google.maps.Point(0, 0), // origin
+       // anchor: new google.maps.Point(0, 0) // anchor
+     };
+
+     var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(LatLng[0], LatLng[1]),
+      draggable: true,
+      map: map,
+      icon: icon,
+      title: iconText
+    });
+     marker.setMap(map);
+   };
+
+   function placeEntranceCoordinates(map) {
+
+    var ParkinGenieIcon = 'assets/images/glowLampCloud144x105.png';
+
+    database.ref('ParkingLots').on("value", function(parkingLotsObjects) {
+      console.log("parkingLotsObjects = ", parkingLotsObjects.numChildren());
+
+      parkingLotsObjects.forEach(function(parkingLotsObjectItems) {
+
+        parkingLotsObjectItems.child("entrances");
+        console.log("entrances = ", parkingLotsObjectItems.child("entrances").numChildren());
+
+        parkingLotsObjectItems.child("entrances").forEach(function(entrances) {
+          console.log("entrances.markerCoord = " + entrances.child("markerCoord").val());
+          placeCustomMarker(map, entrances.child("markerCoord").val(), ParkinGenieIcon, "ParkingGenie Entrance");
+        });
+      });
+    });
+  };
+
+  function placeParkingSpaces(map) {
+
+    database.ref('ParkingLots').on("value", function(parkingLotsObjects) {
+      console.log("parkingLotsObjects = ", parkingLotsObjects.numChildren());
+
+      parkingLotsObjects.forEach(function(parkingLotsObjectItems) {
+
+        parkingLotsObjectItems.child("spaces");
+        console.log("spaces = ", parkingLotsObjectItems.child("spaces").numChildren());
+
+        parkingLotsObjectItems.child("spaces").forEach(function(spacesCoords) {
+          console.log("spacesCoords = " + spacesCoords.child("spaceCoord").val());
+
+          var spaceType = spacesCoords.child("type").val();
+          console.log("spaceType = ", spacesCoords.child("type").val());
+
+          var pgCarParkedHere = spacesCoords.child("pgCarParkedHere").val();
+          console.log("pgCarParkedHere = ", spacesCoords.child("pgCarParkedHere").val());
+
+          console.log("spacesCoords = " + spacesCoords.child("spaceCoord").val()[0]);
+          console.log("spacesCoords = " + spacesCoords.child("spaceCoord").val()[1]);
+          console.log("spacesCoords = " + spacesCoords.child("spaceCoord").val()[2]);
+          console.log("spacesCoords = " + spacesCoords.child("spaceCoord").val()[3]);
+
+          latlng1 = spacesCoords.child("spaceCoord").val()[0];
+          latlng2 = spacesCoords.child("spaceCoord").val()[1];
+          latlng3 = spacesCoords.child("spaceCoord").val()[2];
+          latlng4 = spacesCoords.child("spaceCoord").val()[3];
+
+          var height = .001;
+          // var heading = map.getHeading();
+          // console.log("heading = " + heading);
+          var sColor;
+          var fColor;
+
+          var openParkingSpaces =  [
+          new google.maps.LatLng(latlng1[0],latlng1[1]),
+          new google.maps.LatLng(latlng2[0]+height,latlng2[1]),
+          new google.maps.LatLng(latlng3[0]+height,latlng3[1]),
+          new google.maps.LatLng(latlng4[0],latlng4[1])                              
+          ];
+
+          if (pgCarParkedHere) {
+            sColor = '#f9e45d';
+            fColor = '#f9e45d';
+          }
+          else {
+
+            if (spaceType.trim() == "standard") {
+              sColor = '#c02844';
+              fColor = '#c02844';             
+            }
+            else if (spaceType.trim() == "accessible") {
+              sColor = '#a3def6';
+              fColor = '#a3def6';
+            }
+          }
+
+              // Construct the polygons for each open space.
+              var parkingSpace = new google.maps.Polygon({
+                paths: openParkingSpaces,
+                strokeColor: sColor,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: fColor,
+                fillOpacity: 0.35
+              });
+              parkingSpace.setMap(map);
+            });
+      });
+    });
+  };
+
+  function markSpaceWhereParked(map) {
+
+      // var map = new google.maps.Map(document.getElementById('map'), {
+      //  zoom: 4,
+      //  center: {lat: 35.228797, lng: -80.834507}
+      // });
+
+      // var marker = new google.maps.Marker({
+      //  position: map.getCenter(),
+      //  icon: {
+      //    path: google.maps.SymbolPath.CIRCLE,
+      //    scale: 10
+      //  },
+      //  draggable: true,
+      //  map: map
+      // });
+
+      console.log("Trying to Park Here!");
+    var MyCarParkedHere = {lat: 35.22931, lng: -80.8345};
+    var ParkinGenieIcon = 'assets/images/genieLamp32x18.png';
+      placeCustomMarker(map, MyCarParkedHere, ParkinGenieIcon, "Your Car Is Here!");
+
+    };
+
+  function initialize() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var curLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var map = new google.maps.Map(document.getElementById('pg-map'), {
+        center: curLocation,
+        zoom: zoomLevel.parkingSpaces,
+        mapTypeId: 'satellite'
+      });
+    });
+  }
+    placeEntranceCoordinates(map);
+    placeParkingSpaces(map);
+
+    markSpaceWhereParked(map);
+
+
+    var me = $('#dynamic');
+
+
+
+    $("#poi").click(function(){
       if (me.html() === ""){
         me.append(panel);
       }
@@ -85,7 +240,7 @@
       }
     });
 
-     $("#begin-search-button").click(function(){
+    $("#begin-search-button").click(function(){
       if (me.html() === ""){
         me.append(genie);
       }
@@ -109,9 +264,9 @@
   });
 
      // $("#button1").on("click", function(){
-      database.ref().on("value", function(snapshot){
-        console.log(snapshot.val().ParkingLots[0].spaces[1].spaceCoord[0]);
-      });
+      // database.ref().on("value", function(snapshot){
+      //   console.log(snapshot.val().ParkingLots[0].spaces[1].spaceCoord[0]);
+      // });
 
       // ref('ParkingLots').on("value", function(parkingLotsObjects) {
       //   console.log("parkingLotsObjects = ", parkingLotsObjects.numChildren());
