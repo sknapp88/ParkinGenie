@@ -1,5 +1,5 @@
 	var map, infoWindow;
-  
+
   var panel = (`<div class="holder">
     <div class="panel panel-default" id="events">
     <div class="panel-heading">
@@ -11,9 +11,6 @@
     </div>
     </div>`);
   var genie = (`
-    <div class="row">
-    <img class="top-elemnt" src="assets/images/junk-genie.png" alt="genie awaits">
-    </div>
     <div class="row">
     <button type="button" id="button1" class="form-control btn-primary" name="park">Remember Where I Parked</button>
     </div>
@@ -114,18 +111,24 @@
         me.append(genie);
       }
 
-     function findParking(){
-      var cur_location = new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng());
-      var request = {
-        location: cur_location,
-        radius: 500,
-        types: "Parking"
-      };
-      var service = new google.maps.places.PlacesService(map);
-      service.search(request, createMarkers);
-    }
-    findParking();
-  });
+      function findParking(){
+        var cur_location = new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng());
+        var request = {
+          location: cur_location,
+          radius: 500,
+          types: "Parking"
+        };
+        var service = new google.maps.places.PlacesService(map);
+        service.search(request, createMarkers);
+      }
+      findParking();
+    });
+
+     $('.logonBtn').on('click', function(event) {
+      event.preventDefault();
+      var url = $(this).data('target');
+      location.replace(url);
+    });
 
   // $("#button1").on("click", function(){
   //   myCar = {
