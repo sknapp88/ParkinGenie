@@ -1,9 +1,5 @@
 	var map, infoWindow;
-  var form = (`<form id="email-form">
-    <label for="email">Please enter your Email</label>
-    <input type="text" class="form-control top-element" id="email-input" name="email-input">
-    <button type="button" class="form-control btn-primary" name="submit" id="e-submit">Submit</button>
-    </form>`);
+  
   var panel = (`<div class="holder">
     <div class="panel panel-default" id="events">
     <div class="panel-heading">
@@ -22,6 +18,7 @@
     <button type="button" id="button1" class="form-control btn-primary" name="park">Remember Where I Parked</button>
     </div>
     `);
+  var myCar;
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyC7sur-winD7BqDB3TRLB8aO49-b_XBLWA",
@@ -31,8 +28,9 @@
     storageBucket: "parkingenie-3ab7b.appspot.com",
     messagingSenderId: "790386734940"
   };
-  
+
   firebase.initializeApp(config);
+  
   function initMap() {
     map = new google.maps.Map(document.getElementById('pg-map'), {
      center: {lat: 35.228440, lng:  -80.834919},
@@ -77,10 +75,10 @@
     // check for @
     var atSymbol = emailToTest.indexOf("@");
     if(atSymbol < 1) return false;
-
+    console.log(atSymbol);
     var dot = emailToTest.indexOf(".");
     if(dot <= atSymbol + 2) return false;
-
+    console.log(dot);
     // check that the dot is not at the end
     if (dot === emailToTest.length - 1) return false;
 
@@ -97,7 +95,7 @@
       }
     });
 
-     $("#events-button").click(function(){
+     $("#poi").click(function(){
       if (me.html() === ""){
         me.append(panel);
       }
@@ -126,6 +124,13 @@
       var service = new google.maps.places.PlacesService(map);
       service.search(request, createMarkers);
     }
-
-    $("#button1").on("click", findParking());
+    findParking();
   });
+
+  // $("#button1").on("click", function(){
+  //   myCar = {
+  //     lat: position.coords.latitude,
+  //     lng: position.coords.longitude
+  //   };
+  //   database.ref().
+  // });

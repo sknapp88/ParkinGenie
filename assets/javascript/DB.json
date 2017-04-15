@@ -1,0 +1,63 @@
+{
+	"UserData": [
+		{
+			"username": "Seussan",
+			"email": "seussan@gmail.com"
+		}
+	],
+
+	"ParkingLots": [
+		{
+			"lotName": "UNC Charlotte Center City",
+			"lotAddress": {
+				"street": "319 E. 9th St.",
+				"city": "Charlotte",
+				"state": "NC",
+				"zip": "28202"
+			},
+			"entrances": [
+				{
+					"street_address": "325 E. 9th St.",
+					"city": "Charlotte",
+					"state": "NC",
+					"zip": "28202",
+					"markerCoord": [35.228732, -80.834902]
+				},
+				{
+					"street_address": "667 N Brevard St",
+					"city": "Charlotte",
+					"state": "NC",
+					"zip": "28202",
+					"markerCoord": [35.228941, -80.833866]
+				}
+			],
+			"lotFeatures": {
+				"free": false,
+				"paid": true,
+				"reserved": true,
+				"monthly": true,
+				"totalSpaces": 200
+			},
+			"spaces": [
+				{
+					"spaceCoord": [ [35.22923,-80.83415], [35.22921,-80.83413], [35.22924,-80.83409], [35.22926,-80.83411] ],
+					"type": "standard",
+					"available": true,
+					"pgCarParkedHere": ""
+				},
+				{  	
+					"spaceCoord": [ [35.22936,-80.83408], [35.22935, -80.83406], [35.22938, -80.83402], [35.22939, -80.83403] ],
+					"type": "standard",
+					"available": false,
+					"pgCarParkedHere": ""
+				},
+				{
+					"spaceCoord": [ [35.22912,-80.83412], [35.22910,-80.83410], [35.22913,-80.83406], [35.22915,-80.83407] ],
+					"type": "accessible",
+					"available": false,
+					"pgCarParkedHere": "" 
+				}
+			]
+		}
+	]
+}
